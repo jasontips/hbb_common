@@ -68,7 +68,22 @@ lazy_static::lazy_static! {
     pub static ref OVERWRITE_DISPLAY_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref DEFAULT_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref OVERWRITE_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
-    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
+    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = {
+        let mut map = HashMap::new();
+        // 预设 ID Server (Rendezvous Server)
+        map.insert("custom-rendezvous-server".to_string(), "cfi.openvoxtech.com".to_string());
+        // 预设 API Server
+        map.insert("api-server".to_string(), "http://cfi.openvoxtech.com".to_string());
+        // 预设 Key
+        map.insert("key".to_string(), "SJ3w531HrgANTn4vMQBJx1Gau2yjGh97ZJWWHzgkJ4o=".to_string());
+        // 禁用检查更新
+        map.insert("check-update-on-start".to_string(), "N".to_string());
+        // 禁用自动更新
+        map.insert("enable-auto-update".to_string(), "N".to_string());
+        // 修改应用程序名称
+        map.insert("custom-app-name".to_string(), "VoxDesk".to_string());
+        RwLock::new(map)
+    };
     pub static ref BUILTIN_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
 }
 
@@ -98,8 +113,8 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-pub const RENDEZVOUS_SERVERS: &[&str] = &["cfi.openvoxtech.com"];
-pub const RS_PUB_KEY: &str = "SJ3w531HrgANTn4vMQBJx1Gau2yjGh97ZJWWHzgkJ4o=";
+pub const RENDEZVOUS_SERVERS: &[&str] = &[""];
+pub const RS_PUB_KEY: &str = "";
 
 pub const RENDEZVOUS_PORT: i32 = 21116;
 pub const RELAY_PORT: i32 = 21117;
